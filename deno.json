@@ -1,0 +1,9 @@
+{
+    "compilerOptions": {
+        "lib": [
+            "deno.window",
+            "dom"
+        ]
+    },
+    "importMap": "./import_map.json"
+}
