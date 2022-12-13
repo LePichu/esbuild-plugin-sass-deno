@@ -20,7 +20,7 @@ build({
 ```ts
 import styles from "./styles.scss"
 
-document.getElementsByTagName('head')[0].innerHTML += `<style>${styles}</style>`
+document.getElementsByTagName("head")[0].innerHTML += `<style>${styles}</style>`
 ```
 
 ## License

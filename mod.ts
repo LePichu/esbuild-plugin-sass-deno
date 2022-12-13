@@ -1,15 +1,14 @@
 import { Plugin } from "esbuild"
 import sass from "deno's ass"
-import { Language, minify } from "minifier"
  
 const sassPlugin: Plugin = {
     name: "esbuild-plugin-sass-deno",
     setup: (build) => {
         build.onLoad({ filter: /\.scss$/ }, async (args) => {
             const file = await Deno.readTextFile(args.path)
-            const css = sass(file).to_string("expanded")
+            const css = sass(file).to_string("compressed")
             return {
-                contents: minify(Language.CSS, css.toString()),
+                contents: css.toString(),
                 loader: "text"
             }
         })
