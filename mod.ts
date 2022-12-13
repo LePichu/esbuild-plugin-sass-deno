@@ -1,5 +1,6 @@
 import { Plugin } from "esbuild"
 import sass from "deno's ass"
+import { Language, minify } from "minifier"
  
 const sassPlugin: Plugin = {
     name: "esbuild-plugin-sass-deno",
@@ -8,7 +9,7 @@ const sassPlugin: Plugin = {
             const file = await Deno.readTextFile(args.path)
             const css = sass(file).to_string("expanded")
             return {
-                contents: css.toString().replaceAll("\n", "").replaceAll("{  ", "{").replaceAll("; ", ";"),
+                contents: minify(Language.CSS, css.toString()),
                 loader: "text"
             }
         })
