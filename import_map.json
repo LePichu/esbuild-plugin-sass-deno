@@ -1,6 +1,7 @@
 {
     "imports": {
         "esbuild": "https://deno.land/x/esbuild@v0.17.11/mod.js",
-        "deno's ass": "https://deno.land/x/denosass@1.0.6/mod.ts"
+        "deno's ass": "https://deno.land/x/denosass@1.0.6/mod.ts",
+        "path": "https://deno.land/std@0.174.0/path/mod.ts",
     }
 }
