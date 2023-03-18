@@ -3,12 +3,14 @@ import sassPlugin from "../mod.ts";
 
 await esbuild.build({
   entryPoints: [
-    "example/styles.scss"
+    "example/injectCss.ts"
   ],
   bundle: true,
   outdir: "example",
   plugins: [
-    sassPlugin()
+    sassPlugin({
+      loader: "text"
+    })
   ],
 });
 

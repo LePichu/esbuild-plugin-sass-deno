@@ -2,7 +2,9 @@ import { Plugin } from "https://deno.land/x/esbuild@v0.17.11/mod.js";
 import { posix } from "https://deno.land/std@0.174.0/path/mod.ts";
 import sass from "https://deno.land/x/denosass@1.0.6/mod.ts";
 
-const defaultNamespace = "esbuild-plugin-sass-deno";
+interface Option {
+  loader: "css"| "text"
+}
 
 const loadSass = async function (path: string) {
   const text = await Deno.readTextFile(path);
@@ -12,23 +14,16 @@ const loadSass = async function (path: string) {
   }).to_string("compressed").toString();
 };
 
-const sassPlugin = (): Plugin => ({
+const sassPlugin = (option?: Option): Plugin => ({
   name: "esbuild-plugin-sass-deno",
   setup: (build) => {
-    build.onResolve({ filter: /\.scss$/ }, (args) => {
-      return {
-        path: args.path,
-        namespace: defaultNamespace,
-      };
-    });
-
     build.onLoad(
-      { filter: /.*/, namespace: defaultNamespace },
+      { filter: /\.scss/ },
       async (args) => {
         const cssContent = await loadSass(posix.resolve(args.path));
         return {
           contents: cssContent,
-          loader: "css",
+          loader: option?.loader ?? "css",
         };
       },
     );
