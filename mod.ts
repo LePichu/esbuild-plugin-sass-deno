@@ -3,7 +3,6 @@ import { posix } from "https://deno.land/std@0.174.0/path/mod.ts";
 import sass from "https://deno.land/x/denosass@1.0.6/mod.ts";
 
 const defaultNamespace = "esbuild-plugin-sass-deno";
-const entryNamespace = defaultNamespace + "-entry";
 
 const loadSass = async function (path: string) {
   const text = await Deno.readTextFile(path);
@@ -17,17 +16,10 @@ const sassPlugin = (): Plugin => ({
   name: "esbuild-plugin-sass-deno",
   setup: (build) => {
     build.onResolve({ filter: /\.scss$/ }, (args) => {
-      if (args.kind === "entry-point") {
-        return {
-          path: args.path,
-          namespace: entryNamespace,
-        };
-      } else {
-        return {
-          path: args.path,
-          namespace: defaultNamespace,
-        };
-      }
+      return {
+        path: args.path,
+        namespace: defaultNamespace,
+      };
     });
 
     build.onLoad(
@@ -37,17 +29,6 @@ const sassPlugin = (): Plugin => ({
         return {
           contents: cssContent,
           loader: "css",
-        };
-      },
-    );
-
-    build.onLoad(
-      { filter: /.*/, namespace: entryNamespace },
-      async (args) => {
-        const cssContent = await loadSass(posix.resolve(args.path));
-        return {
-          contents: cssContent,
-          loader: "text",
         };
       },
     );
