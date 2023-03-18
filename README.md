@@ -6,21 +6,47 @@ Dart-SASS being a pain.
 
 ## Usage
 
-- Buildscript
+See `example` directory for details.
+
+- Exporting as a single CSS file
   ```ts
-  import { build } from "https://deno.land/x/esbuild/mod.ts";
+  import * as esbuild from "https://deno.land/x/esbuild/mod.ts";
   import sassPlugin from "https://deno.land/x/esbuild_plugin_sass_deno/mod.ts";
 
-  build({
+  await esbuild.build({
     entryPoints: [
-      "example/in.ts",
+      "example/styles.scss"
     ],
     bundle: true,
-    outfile: "example/out.js",
-    plugins: [sassPlugin()],
+    outdir: "example",
+    plugins: [
+      sassPlugin()
+    ],
   });
+
+  esbuild.stop();
   ```
-- Main Entrypoint File:
+- Inject style with JavaScript
+  ```ts
+  import * as esbuild from "https://deno.land/x/esbuild/mod.ts";
+  import sassPlugin from "https://deno.land/x/esbuild_plugin_sass_deno/mod.ts";
+
+  await esbuild.build({
+    entryPoints: [
+      "example/injectCss.ts"
+    ],
+    bundle: true,
+    outdir: "example",
+    plugins: [
+      sassPlugin({
+        loader: "text"
+      })
+    ],
+  });
+
+  esbuild.stop();
+  ```
+  with `injectCss.ts`:
   ```ts
   import styles from "./styles.scss";
 
