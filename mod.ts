@@ -1,6 +1,6 @@
-import { Plugin } from "esbuild";
-import { posix } from "path";
-import sass from "deno's ass";
+import { Plugin } from "https://deno.land/x/esbuild@v0.17.11/mod.js";
+import { posix } from "https://deno.land/std@0.174.0/path/mod.ts";
+import sass from "https://deno.land/x/denosass@1.0.6/mod.ts";
 
 const sassPlugin: Plugin = {
   name: "esbuild-plugin-sass-deno",
