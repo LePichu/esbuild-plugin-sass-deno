@@ -1,9 +1,9 @@
-import { Plugin } from "https://deno.land/x/esbuild@v0.17.11/mod.js";
-import { posix } from "https://deno.land/std@0.174.0/path/mod.ts";
-import sass from "https://deno.land/x/denosass@1.0.6/mod.ts";
+import { esbuild } from "./deps.ts";
+import { posix } from "./deps.ts";
+import { sass } from "./deps.ts";
 
 interface Option {
-  loader: "css"| "text"
+  loader: "css" | "text";
 }
 
 const loadSass = async function (path: string) {
@@ -14,7 +14,7 @@ const loadSass = async function (path: string) {
   }).to_string("compressed").toString();
 };
 
-const sassPlugin = (option?: Option): Plugin => ({
+const sassPlugin = (option?: Option): esbuild.Plugin => ({
   name: "esbuild-plugin-sass-deno",
   setup: (build) => {
     build.onLoad(
